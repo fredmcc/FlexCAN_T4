@@ -115,6 +115,7 @@ ISOTP_CLASS class isotp : public isotp_Base {
     void write(const ISOTP_data &config, const uint8_t *buf, uint16_t size);
     void write(const ISOTP_data &config, const char *buf, uint16_t size) { write(config, (const uint8_t*)buf, size); }
     void sendFlowControl(const ISOTP_data &config);
+    void setFilterRange(uint32_t id_low, uint32_t id_high) { filter_id_low = id_low; filter_id_high = id_high; }
 
   private:
     void _process_frame_data(const CAN_message_t &msg);
@@ -122,6 +123,8 @@ ISOTP_CLASS class isotp : public isotp_Base {
     uint8_t padding_value = 0xA5;
     volatile bool isotp_enabled = 0;
     uint8_t readBus = 1;
+    uint32_t filter_id_low = 0;
+    uint32_t filter_id_high = 0x1fffffff;
 };
 
 #include "isotp.tpp"

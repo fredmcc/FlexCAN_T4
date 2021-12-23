@@ -110,6 +110,8 @@ ISOTP_FUNC void ISOTP_OPT::_process_frame_data(const CAN_message_t &msg) {
   if ( msg.bus != readBus ) return;
 #endif
 
+  if ( msg.id < filter_id_low || msg.id > filter_id_high ) return;
+
   if ( msg.buf[0] <= 7 ) { /* single frame */
     ISOTP_data config;
     config.id = msg.id;
